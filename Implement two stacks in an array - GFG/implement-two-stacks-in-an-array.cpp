@@ -92,7 +92,7 @@ int twoStacks ::pop1()
 //Function to remove an element from top of the stack2.
 int twoStacks :: pop2()
 {
-   if(top2==-1 || top2== size){
+   if(top2== size){
        return -1;
    }
    int tmp= arr[top2];
