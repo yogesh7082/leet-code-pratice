@@ -7,40 +7,44 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
   public:
-    // Function to convert an infix expression to a postfix expression.
+    int pr(char x)
+    {
+        if( x=='^')
+        return 3;
+        else if (x=='/' || x=='*')
+        return 2;
+        else if( x=='-' || x=='+')
+        return 1;
+        else if( x=='(')
+        return 0;
+        else
+        return -1;
+    }
     string infixToPostfix(string s) {
-        unordered_map<char,int> m; 
-   {
-       m.insert({'^',3});
-       m.insert({'*',2});
-       m.insert({'/',2});
-       m.insert({'+',1});
-       m.insert({'-',1});
-       m.insert({'(',0});
-   }
-        
         string sol;
         stack<char> st;
         for(auto x:s)
         {
-            if(x>='a' && x<='z' || x>='A' && x<='Z')
+            if( x>='a' && x<='z' || x>='A' && x<='Z')
             {
                 sol+=x;
-            }else if( x=='(')
+            }else
+            if( x=='(')
             {
                 st.push(x);
-            }else if( x==')')
+            }
+            else if( x==')')
             {
-                while(st.top()!='(')
+                while( st.size()!=0 && st.top()!='(')
                 {
-                    char ch=st.top();
-                    sol+=ch;
+                    sol+=st.top();
                     st.pop();
                 }
                 st.pop();
-            }else
+            }
+            else
             {
-                while(!st.empty() && m[x]<=m[st.top()])
+                while( st.size()!=0 && pr(x)<=pr(st.top()))
                 {
                     sol+=st.top();
                     st.pop();
@@ -48,17 +52,14 @@ class Solution {
                 st.push(x);
             }
             
-           
         }
-         while(!st.empty())
-            {
-                sol+=st.top();
-                st.pop();
-            }
-            return sol;
+        while(st.size()!=0)
+        {
+            sol+=st.top();
+            st.pop();
+        }
         
-        
-        
+        return sol;
     }
 };
 
